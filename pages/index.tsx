@@ -36,32 +36,12 @@ const IndexPage = ({ blogPosts }) => {
         <title>Posts: {usersString}</title>
         <meta name="description" content={`dev.to posts ${usersString}}`} />
       </Head>
-      <ul className="w-full overflow-x-scroll flex space-x-6 px-2 sticky top-0 bg-white z-50">
-        {users.map((user, index) => (
-          <li
-            key={user}
-            className={`py-2 ${
-              currentIndex === index ? "border-b-4 border-indigo-600" : ""
-            } `}
-          >
-            <a
-              href="/"
-              className="text-center"
-              onClick={(evt) => {
-                evt.preventDefault();
-                setCurrentIndex(index);
-              }}
-            >
-              {user}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <div>
+
+      <div className="max-w-xl mx-auto">
         {blogPosts[currentIndex]?.map((post) => (
           <div key={post.id} className="mb-4">
             {post.cover_image && (
-              <div className="relative w-screen h-48">
+              <div className="relative max-w-xl h-48">
                 <Image src={post.cover_image} alt={post.title} layout="fill" />
               </div>
             )}
@@ -97,6 +77,29 @@ const IndexPage = ({ blogPosts }) => {
             </div>
           </div>
         ))}
+        <ul className="w-full overflow-x-scroll flex space-x-6 px-2 sticky bottom-0 bg-white z-50">
+          {users.map((user, index) => (
+            <li
+              key={user}
+              className={`py-2 ${
+                currentIndex === index
+                  ? "border-t-4 border-indigo-600"
+                  : "border-t-4 border-transparent"
+              } `}
+            >
+              <a
+                href="/"
+                className="text-center"
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  setCurrentIndex(index);
+                }}
+              >
+                {user}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
