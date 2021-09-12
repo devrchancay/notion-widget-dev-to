@@ -6,11 +6,11 @@ import Head from "next/head";
 export const getServerSideProps = async ({ query }) => {
   const users = query?.users?.split(",") ?? [];
 
-  const usersPromise = users.map((user) =>
-    fetch(`https://dev.to/api/articles?username=${user}`).then((user) =>
+  const usersPromise = users.map((user) => {
+    return fetch(`https://dev.to/api/articles?username=${user}`).then((user) =>
       user.json()
-    )
-  );
+    );
+  });
 
   const blogPosts = await Promise.all(usersPromise);
 
@@ -37,11 +37,11 @@ const IndexPage = ({ blogPosts }) => {
         <meta name="description" content={`dev.to posts ${usersString}}`} />
       </Head>
 
-      <div className="max-w-xl mx-auto">
+      <div className="max-w-xl mx-auto sm:overflow-x-hidden">
         {blogPosts[currentIndex]?.map((post) => (
           <div key={post.id} className="mb-4">
             {post.cover_image && (
-              <div className="relative max-w-xl h-48">
+              <div className="relative max-w-xl h-64">
                 <Image src={post.cover_image} alt={post.title} layout="fill" />
               </div>
             )}
