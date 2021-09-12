@@ -2,14 +2,15 @@ import { useRouter } from "next/dist/client/router";
 import { useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
+import axios from "axios";
 
 export const getServerSideProps = async ({ query }) => {
   const users = query?.users?.split(",") ?? [];
 
   const usersPromise = users.map((user) => {
-    return fetch(`https://dev.to/api/articles?username=${user}`).then((user) =>
-      user.json()
-    );
+    return axios(`https://dev.to/api/articles?username=${user}`).then((res) => {
+      return res.data;
+    });
   });
 
   const blogPosts = await Promise.all(usersPromise);
