@@ -42,7 +42,7 @@ const IndexPage = ({ blogPosts }) => {
         {blogPosts[currentIndex]?.map((post) => (
           <div key={post.id} className="mb-4">
             {post.cover_image && (
-              <div className="relative max-w-xl h-64">
+              <div className="relative max-w-xl h-52">
                 <Image src={post.cover_image} alt={post.title} layout="fill" />
               </div>
             )}
